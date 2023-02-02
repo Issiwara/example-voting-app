@@ -13,7 +13,7 @@ RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
 WORKDIR /source
 COPY worker/*.csproj .
-RUN  dotnet restore -r linux-${ARCH}
+RUN  dotnet restore -v minimal worker/
 
 COPY worker/ .
 RUN  dotnet publish -c release -o /app -r linux-${ARCH} --self-contained false --no-restore
