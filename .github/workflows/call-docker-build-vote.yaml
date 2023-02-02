@@ -1,4 +1,4 @@
-name: Publish Docker Image to Docker Hub
+name: Build vote image
 
 on:
   push:
