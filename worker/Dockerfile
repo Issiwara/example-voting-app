@@ -12,7 +12,7 @@ ARG BUILDPLATFORM
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
 WORKDIR /source
-COPY *.csproj .
+COPY worker/*.csproj .
 RUN case ${TARGETPLATFORM} in \
          "linux/amd64")  ARCH=x64  ;; \
          "linux/arm64")  ARCH=arm64  ;; \
@@ -21,7 +21,7 @@ RUN case ${TARGETPLATFORM} in \
     esac \
     && dotnet restore -r linux-${ARCH}
 
-COPY . .
+COPY worker/ .
 RUN  case ${TARGETPLATFORM} in \
          "linux/amd64")  ARCH=x64  ;; \
          "linux/arm64")  ARCH=arm64  ;; \
