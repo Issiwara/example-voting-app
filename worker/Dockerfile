@@ -10,10 +10,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0
 
 WORKDIR /code
-ADD src/worker /code/src/worker
+ADD worker/ /code/src/worker
 
-RUN  dotnet restore -v minimal src/worker \
-     && dotnet publish -c Release -o "./" "src/worker/"
+RUN  dotnet restore -v minimal worker/ \
+     && dotnet publish -c Release -o "./" "worker/"
      
 
-CMD dotnet src/worker/worker.dll
+CMD dotnet worker/worker.dll
