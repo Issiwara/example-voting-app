@@ -15,12 +15,12 @@ COPY worker/*.csproj .
 RUN dotnet restore -v minimal
 
 COPY worker/ .
-WORKDIR /source
+WORKDIR /source/.
 
 RUN dotnet build "Worker.csproj" -c Release -o /app/build
 
-
-RUN dotnet publish "Worker.csproj"-c release -o /app/publish
+FROM build AS publish
+RUN dotnet publish "Worker.csproj" -c Release -o /app/publish
 
 # app image
 FROM mcr.microsoft.com/dotnet/runtime:7.0
