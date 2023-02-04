@@ -7,13 +7,18 @@
 # for example, if you were on Intel (amd64) and wanted to build for ARM, you would use:
 # docker buildx build --platform "linux/arm64/v8" .
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
-WORKDIR /code/src/worker
-ADD worker/ /code/src/worker
+WORKDIR /source
+COPY *.csproj .
+RUN dotnet restore -v minimal
 
-RUN  dotnet restore -v minimal /code/src/worker \
-     && dotnet publish -c Release -o "./" "/code/src/worker"
-     
+COPY . .
+RUN dotnet publish -c release -o /app -r --self-contained false --no-restore
 
-CMD dotnet /code/src/worker/worker.dll
+# app image
+FROM mcr.microsoft.com/dotnet/runtime:7.0
+WORKDIR /app
+COPY --from=build /app .
+ENTRYPOINT ["dotnet", "Worker.dll"]
