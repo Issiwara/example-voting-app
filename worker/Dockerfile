@@ -9,7 +9,7 @@
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0
 
-WORKDIR /code
+WORKDIR /code/src/worker
 ADD worker/ /code/src/worker
 
 RUN  dotnet restore -v minimal /code/src/worker \
