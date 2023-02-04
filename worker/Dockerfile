@@ -14,7 +14,7 @@ WORKDIR /source
 COPY worker/*.csproj .
 RUN dotnet restore -v minimal
 
-COPY . .
+COPY worker/ .
 RUN dotnet publish -c release -o /app -r --self-contained false --no-restore
 
 # app image
