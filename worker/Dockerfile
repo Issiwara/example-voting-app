@@ -11,7 +11,7 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
 WORKDIR /source
-COPY *.csproj .
+COPY worker/*.csproj .
 RUN dotnet restore -v minimal
 
 COPY . .
